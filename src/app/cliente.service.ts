@@ -14,7 +14,17 @@ export class ClienteService {
     localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(storage));
   }
 
-  obterLocalStorage(): Cliente[] {
+  pesquisarClientes(nomeBusca: string): Cliente[] {
+    const clientes = this.obterLocalStorage();
+    if (!nomeBusca) {
+      return clientes;
+    }
+    return clientes.filter(
+      (cliente) => cliente.nome?.indexOf(nomeBusca) !== -1
+    );
+  }
+
+  private obterLocalStorage(): Cliente[] {
     const repositorioClientes = localStorage.getItem(
       ClienteService.REPO_CLIENTES
     );
@@ -28,5 +38,10 @@ export class ClienteService {
       JSON.stringify(clientes)
     );
     return clientes;
+  }
+
+  buscarClientePorId(id: string): Cliente | undefined {
+    const clientes = this.obterLocalStorage();
+    return clientes.find((cliente) => cliente.id === id);
   }
 }
