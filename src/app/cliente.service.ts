@@ -12,6 +12,18 @@ export class ClienteService {
     const storage = this.obterLocalStorage();
     storage.push(cliente);
     localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(storage));
+    console.log('Entrou em salvar');
+  }
+
+  atualizar(cliente: Cliente) {
+    const storage = this.obterLocalStorage();
+    storage.forEach((c) => {
+      if (c.id === cliente.id) {
+        Object.assign(c, cliente);
+      }
+    });
+    localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(storage));
+    console.log('Entrou em atualizar');
   }
 
   pesquisarClientes(nomeBusca: string): Cliente[] {
